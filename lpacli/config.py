@@ -37,7 +37,7 @@ class Config:
                 logger.error('Cannot read token file \'{}\' from cache, please check permissions'.format(self.token_cache_file))
                 self.store_token = False
             # If file is empty set token to none
-            self.lesspass_token = None if self.lesspass_token == '' else self.lesspass_token
+            self.lesspass_token = None if self.lesspass_token == '' or '\n' in self.lesspass_token else self.lesspass_token
         else:
             # Cache dir doesn't exists create it
             try:

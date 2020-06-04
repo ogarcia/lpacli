@@ -6,7 +6,7 @@
 # Distributed under terms of the GNU GPLv3 license.
 
 NAME = 'lpacli'
-VERSION = '0.1.1'
+VERSION = '0.1.2'
 AUTHOR_NAME = 'Óscar García Amor'
 AUTHOR_EMAIL = 'ogarcia@connectical.com'
 DESCRIPTION = 'CLI helper to get LessPass paswords configuration directly from a LessPass server.'

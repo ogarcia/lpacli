@@ -14,13 +14,12 @@ import os
 import sys
 
 def get_pass(args):
-    lesspass_login = Login()
-    lesspass_api_client = LessPassApiClient()
-
     # Perform login to API
+    lesspass_login = Login()
     lesspass_login.perform_login()
 
     # Get passwords list
+    lesspass_api_client = LessPassApiClient()
     response = lesspass_api_client.get_passwords()
 
     if response.status_code == 200:
