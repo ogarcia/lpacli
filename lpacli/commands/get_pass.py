@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 #
-# Copyright © 2020 Óscar García Amor <ogarcia@connectical.com>
+# Copyright © 2020-2021 Óscar García Amor <ogarcia@connectical.com>
 #
 # Distributed under terms of the GNU GPLv3 license.
 
@@ -39,7 +39,7 @@ def get_pass(args):
             else:
                 lesspass_masterpassword = os.environ.get('LESSPASS_MASTERPASS')
                 site_data['digits'] = site_data.get('numbers')
-                if lesspass_masterpassword == None:
+                if lesspass_masterpassword == None or args.settings:
                     # Print options
                     sys.stdout.write('Site: {}\n'.format(site_data.get('site')))
                     sys.stdout.write('Login: {}\n'.format(site_data.get('login')))

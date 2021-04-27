@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 #
-# Copyright © 2020 Óscar García Amor <ogarcia@connectical.com>
+# Copyright © 2020-2021 Óscar García Amor <ogarcia@connectical.com>
 #
 # Distributed under terms of the GNU GPLv3 license.
 
@@ -25,19 +25,21 @@ class Config:
         self.lesspass_host = os.environ.get('LESSPASS_HOST')
         if self.lesspass_host == None:
             sys.exit('You must configure LESSPASS_HOST environment variable')
+        logger.debug('LESSPASS_HOST: {}'.format(self.lesspass_host))
 
         # Try to access to cache to read token
         if os.path.isdir(os.path.dirname(self.token_cache_file)):
             try:
                 with open(self.token_cache_file, 'r') as reader:
+                    logger.debug('Reading token file: {}'.format(self.token_cache_file))
                     self.lesspass_token = reader.read()
+                # If file is empty set token to none
+                self.lesspass_token = None if self.lesspass_token == '' or '\n' in self.lesspass_token else self.lesspass_token
             except FileNotFoundError:
                 logger.info('No token file \'{}\' found on cache dir'.format(self.token_cache_file))
             except PermissionError:
                 logger.error('Cannot read token file \'{}\' from cache, please check permissions'.format(self.token_cache_file))
                 self.store_token = False
-            # If file is empty set token to none
-            self.lesspass_token = None if self.lesspass_token == '' or '\n' in self.lesspass_token else self.lesspass_token
         else:
             # Cache dir doesn't exists create it
             try:

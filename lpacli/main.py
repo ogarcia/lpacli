@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 #
-# Copyright © 2020 Óscar García Amor <ogarcia@connectical.com>
+# Copyright © 2020-2021 Óscar García Amor <ogarcia@connectical.com>
 #
 # Distributed under terms of the GNU GPLv3 license.
 
@@ -21,6 +21,7 @@ def main():
     # Create argument parser to get options via arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action='count', default=0, help='be verbose (add more v to increase verbosity)')
+    parser.add_argument('-s', '--settings', action='store_true', help='print site settings instead of password')
     parser.add_argument('site', help='site to obtain password or ls to list')
     parser.set_defaults(func=get_pass)
 
@@ -34,6 +35,7 @@ def main():
     logging.basicConfig(level=log_level)
     logger = logging.getLogger('lpacli')
     logger.info('Setting loglevel to {}'.format(logging.getLevelName(log_level)))
+    logger.debug('Parsed arguments, settings: "{}", site: "{}"'.format(args.settings, args.site))
 
     # Configure app
     config.configure()

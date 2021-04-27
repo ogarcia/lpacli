@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 #
-# Copyright © 2020 Óscar García Amor <ogarcia@connectical.com>
+# Copyright © 2020-2021 Óscar García Amor <ogarcia@connectical.com>
 #
 # Distributed under terms of the GNU GPLv3 license.
 
@@ -22,7 +22,7 @@ class LessPassApiClient:
     def request(self, method, uri, **kwargs):
         if self.lesspass_token is not None:
             headers = kwargs.get('headers', {})
-            headers['authorization'] = 'JWT {}'.format(self.lesspass_token)
+            headers['authorization'] = 'Bearer {}'.format(self.lesspass_token)
             kwargs['headers'] = headers
 
         url = requests.compat.urljoin(self.lesspass_host, uri)
@@ -31,12 +31,12 @@ class LessPassApiClient:
 
     def get_token(self):
         json = {'email': self.lesspass_user, 'password': self.lesspass_pass}
-        return self.request('POST', 'api/tokens/auth/', json=json)
+        return self.request('POST', 'auth/jwt/create/', json=json)
 
-    def update_token(self, token):
-        json = {'token': token}
-        return self.request('POST', 'api/tokens/refresh/', json=json)
+    def update_token(self):
+        json = {'refresh': self.lesspass_token}
+        return self.request('POST', 'auth/jwt/refresh/', json=json)
 
     def get_passwords(self):
-        return self.request('GET', 'api/passwords/')
+        return self.request('GET', 'passwords/')
 

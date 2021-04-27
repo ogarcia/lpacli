@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim:fenc=utf-8
 #
-# Copyright © 2020 Óscar García Amor <ogarcia@connectical.com>
+# Copyright © 2020-2021 Óscar García Amor <ogarcia@connectical.com>
 #
 # Distributed under terms of the GNU GPLv3 license.
 
@@ -31,11 +31,16 @@ class Login:
 
     def perform_login(self):
         if self.lesspass_token == None:
+            logger.debug('Asking for new token')
             response = self.lesspass_api_client.get_token()
         else:
-            response = self.lesspass_api_client.update_token(self.lesspass_token)
-        if response.status_code == 200:
-            config.lesspass_token = response.json()['token']
+            logger.debug('Asking for token refresh')
+            response = self.lesspass_api_client.update_token()
+        if response.status_code == 200 or response.status_code == 201:
+            response_json = response.json()
+            config.lesspass_token = response_json.get('refresh', response_json.get('access', ''))
+            logger.debug('Response: {}'.format(response_json))
+            logger.debug('Stored token: {}'.format(config.lesspass_token))
             if self.store_token:
                 self._store_token(config.lesspass_token)
         else:
@@ -46,4 +51,3 @@ class Login:
                 if self.store_token:
                     self._store_token('')
                 sys.exit('Your token has expired, please try login again with username and password environment variables')
-
