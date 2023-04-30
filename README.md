@@ -1,3 +1,15 @@
+# The project has moved (and renamed)
+
+lpacli code is now hosted in [GitLab as rlpcli][rlpcli] and rewritten in
+[Rust][rust].
+
+- New Git: https://gitlab.com/ogarcia/rlpcli
+- New bugtracker: https://gitlab.com/ogarcia/rlpcli/-/issues
+- New tag list: https://gitlab.com/ogarcia/rlpcli/-/tags
+
+[rlpcli]: https://gitlab.com/ogarcia/rlpcli
+[rust]: https://www.rust-lang.org
+
 # lpacli
 
 **lpacli** is a tiny CLI helper to get LessPass paswords configuration
